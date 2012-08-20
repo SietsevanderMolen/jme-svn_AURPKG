@@ -34,17 +34,22 @@ build() {
   cd "$srcdir/$_svnmod-build"
 
   #
-  # BUILD
+  # BUILD ENGINE
   #
   ant jar || return 1
 
+  # Copy libs
+  msg "Copying libs"
   mkdir -p $pkgdir/usr/share/java/$_realname/lib
   cp -r dist/lib/* $pkgdir/usr/share/java/$_realname/lib/
 
-  # cp target/*.jar $pkgdir/usr/share/java/$_realname/
-  
+  #
+  # BUILD JAVADOC
+  #
   ant javadoc
-  msg "copy docs"
+
+  # Copy javadoc
+  msg "Copying javadoc"
   mkdir -p $pkgdir/usr/share/doc/$_realname
   cp -r dist/javadoc/* $pkgdir/usr/share/doc/$_realname/
 }
